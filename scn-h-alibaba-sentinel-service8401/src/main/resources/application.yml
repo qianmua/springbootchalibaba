@@ -15,6 +15,18 @@ spring:
         dashboard: localhost:8080
         # 默认端口 ,自动扫描 占用 自动+1
         port: 8719
+      # 做sentinel 配置规则持久化
+      # 没有的话 当服务重启时 配置规则就会不见啦
+      # 然后去配置nacos 添加配置就好了
+      # 直接将限流写在 nacos 就ok啦~~
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: cloud-sentinel-service
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
 
 management:
   endpoints:
