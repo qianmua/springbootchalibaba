@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import pres.hjc.cloud.entity.CommonResult;
 import pres.hjc.cloud.entity.Payment;
+import pres.hjc.cloud.service.PaymentService;
 
 import javax.annotation.Resource;
 
@@ -107,6 +108,19 @@ public class OrderNacosController {
     public CommonResult handlerBlock(@PathVariable Long id , BlockException throwable){
         Payment payment = new Payment(id, null);
         return new CommonResult(502 , "服务熔断兜底" + throwable.getCause().getMessage() ,payment);
+    }
+
+
+
+
+    //=======================openFeign
+
+    @Resource
+    private PaymentService service;
+
+    @GetMapping("/cons/pm/{id}")
+    public CommonResult<Payment> queryById(@PathVariable Long id) {
+        return service.queryById(id);
     }
 
 

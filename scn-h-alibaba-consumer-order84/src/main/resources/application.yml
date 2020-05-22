@@ -21,3 +21,7 @@ service-url:
   nacos-user-service: http://nacos-payment-provider
 
 
+# 几活 sentinel 对feign 支持
+feign:
+  sentinel:
+    enabled: true
