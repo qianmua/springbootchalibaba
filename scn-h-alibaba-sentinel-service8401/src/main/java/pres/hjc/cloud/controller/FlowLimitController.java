@@ -1,6 +1,9 @@
 package pres.hjc.cloud.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -49,6 +52,25 @@ public class FlowLimitController {
     *
     * 热点规则
     *
+    * 限流规则只支持 QPS
+    *
+    *  什么是热点？
+    * 常访问的数据 ， 对其访问进行限制
+    *
+    * 热点参数 会根据 传入的参数进行 限制 限流 针对 传入的某个key
+    *
+    *
+    * 资源名 key
+    * 参数索引 0 （p1）
+    * 阈值
+    * 统计时常
+    *
+    *
+    * 参数例外项
+    * 特数情况
+    * 当参数等于某个特数值，可以放宽他的阈值
+    *
+    *
     *
     *
     *
@@ -63,5 +85,25 @@ public class FlowLimitController {
     @GetMapping("/test2")
     public String test2(){
         return "-----test2";
+    }
+
+
+    @GetMapping("/key")
+    /**
+     *
+     * 自定义兜底
+     *
+     * blockHandler blockException处理 问题
+     * */
+    @SentinelResource( value = "key" , blockHandler = "fail_key")
+    public String testKey(@RequestParam( value = "p1" , required = false) String p1,
+                          @RequestParam( value = "p2" , required = false) String p2){
+
+
+        return "SUCCESS";
+    }
+
+    public String fail_key(String p1 , String p2 , BlockException b){
+        return "key ->\t" + p1 + "\t over sentinel! \t\n";
     }
 }
