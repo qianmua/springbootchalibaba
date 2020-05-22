@@ -32,6 +32,7 @@
         <module>scn-h-alibaba-consumer-order83</module>
         <module>scn-h-alibaba-config-nacos-client3377</module>
         <module>scn-h-alibaba-sentinel-service8401</module>
+        <module>scn-h-alibaba-consumer-order84</module>
     </modules>
 
     <!--pom父工程-->
